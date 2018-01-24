@@ -1,0 +1,16 @@
+<template>
+    <div>
+        <h1>Profile</h1>
+
+        <p>My profile.</p>
+
+        <ul v-if="profile">
+            <li>Name: {{ profile.name }}</li>
+            <li>Age: {{ profile.age }}</li>
+        </ul>
+
+        <p v-else><em>Loading...</em></p>
+    </div>
+</template>
+
+<script src="./profile.ts"></script>
