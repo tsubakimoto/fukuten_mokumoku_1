@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using myvueasp.Models;
 using Newtonsoft.Json;
 
@@ -15,7 +16,13 @@ namespace myvueasp.Controllers
     [Route("api/[controller]")]
     public class MlbController : Controller
     {
+        private readonly AppSettings _appSettings;
         private IEnumerable<Team> _teams = null;
+
+        public MlbController(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
 
         [HttpGet("[action]")]
         public async Task<IActionResult> Team()
@@ -29,13 +36,13 @@ namespace myvueasp.Controllers
             return Ok(_teams);
         }
 
-        private static async Task<HttpResponseMessage> MakeRequest()
+        private async Task<HttpResponseMessage> MakeRequest()
         {
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
 
             // Request headers
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "1ae6fa2ee513451cb5992ff9c91b5a3d");
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _appSettings.FantasyDataSubscriptionKey);
 
             var uri = "https://api.fantasydata.net/v3/mlb/scores/JSON/teams?" + queryString;
 
