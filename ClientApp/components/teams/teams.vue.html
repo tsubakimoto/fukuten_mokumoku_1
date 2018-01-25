@@ -1,0 +1,28 @@
+<template>
+    <div>
+        <h1>MLB Teams</h1>
+
+        <table v-if="teams.length" class="table">
+            <thead>
+                <tr>
+                    <th>League</th>
+                    <th>Division</th>
+                    <th>Key</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in teams">
+                    <td>{{ item.league }}</td>
+                    <td>{{ item.division }}</td>
+                    <td>{{ item.key }}</td>
+                    <td>{{ item.city }} {{ item.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p v-else><em>Loading...</em></p>
+    </div>
+</template>
+
+<script src="./teams.ts"></script>
